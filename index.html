@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAHH Security Academy - The Web Application Hacker's Handbook</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons (CDN fallback-safe) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body data-theme="cyan">
+
+  <!-- ==========================================================================
+       App Header
+       ========================================================================== -->
+  <header class="app-header">
+    <div class="header-left">
+      <button class="menu-toggle" id="menuToggle" title="Toggle Navigation Sidebar">
+        <i data-lucide="menu"></i>
+      </button>
+      <div class="logo-badge" id="logoHomeBtn" title="Return to Course Overview">
+        <div class="logo-icon">#</div>
+        <div class="logo-text">
+          <h1>WAHH ACADEMY</h1>
+          <span>Web App Hacker's Handbook (2nd Ed)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-center">
+      <div class="progress-pill">
+        <span>Progress:</span>
+        <div class="progress-bar-wrapper">
+          <div class="progress-bar-fill" id="headerProgressFill" style="width: 0%"></div>
+        </div>
+        <strong id="headerProgressText">0%</strong>
+      </div>
+      <div class="stats-badges">
+        <div class="stat-item" title="Completed Modules">
+          <i data-lucide="check-circle-2" style="width: 15px; color: var(--accent);"></i>
+          <span id="statCompleted">0/23</span>
+        </div>
+        <div class="stat-item" title="Quizzes Passed">
+          <i data-lucide="award" style="width: 15px; color: var(--accent-warning);"></i>
+          <span id="statQuizzes">0/23</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <button class="search-trigger-btn" id="searchTriggerBtn">
+        <i data-lucide="search" style="width: 16px;"></i>
+        <span>Search topics...</span>
+        <span class="search-kbd">Ctrl K</span>
+      </button>
+
+      <div class="theme-picker" title="Switch Theme">
+        <div class="theme-dot dot-cyan" data-set-theme="cyan" title="Clean White / Ocean Blue"></div>
+        <div class="theme-dot dot-emerald" data-set-theme="emerald" title="Clean White / Emerald"></div>
+        <div class="theme-dot dot-amber" data-set-theme="amber" title="Clean White / Warm Amber"></div>
+        <div class="theme-dot dot-purple" data-set-theme="purple" title="Clean White / Violet"></div>
+        <div class="theme-dot dot-dark" data-set-theme="dark" title="Dark Cybersecurity Mode" style="background: #0f172a;"></div>
+      </div>
+
+      <button class="btn-icon" id="backupDataBtn" title="Backup or Restore Progress">
+        <i data-lucide="hard-drive-download" style="width: 17px;"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       Main Container: Sidebar + Content Area
+       ========================================================================== -->
+  <div class="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" id="appSidebar">
+      <div class="sidebar-filters">
+        <div class="filter-pills" id="categoryFilters">
+          <button class="filter-pill active" data-category="all">All Modules</button>
+          <button class="filter-pill" data-category="Fundamentals">Fundamentals</button>
+          <button class="filter-pill" data-category="Reconnaissance">Recon</button>
+          <button class="filter-pill" data-category="Client-Side Controls">Client Controls</button>
+          <button class="filter-pill" data-category="Authentication & Sessions">Auth & Sessions</button>
+          <button class="filter-pill" data-category="Authorization">Authorization</button>
+          <button class="filter-Side Injections" data-category="Server-Side Injections">Injections</button>
+          <button class="filter-pill" data-category="Application Logic">Logic</button>
+          <button class="filter-pill" data-category="Client-Side Attacks">Client Attacks</button>
+          <button class="filter-pill" data-category="Information Disclosure">Info Leak</button>
+          <button class="filter-pill" data-category="Native Code & Architecture">Architecture</button>
+          <button class="filter-pill" data-category="Code Review & Tooling">Tooling & Code</button>
+          <button class="filter-pill" data-category="Methodology & Review">Methodology</button>
+        </div>
+      </div>
+
+      <nav class="modules-list" id="modulesNavList">
+        <!-- Dynamically populated from WAHH_CURRICULUM -->
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="app-content" id="mainContent">
+      
+      <!-- Module Top Banner -->
+      <section class="module-banner" id="moduleBanner">
+        <div class="banner-top">
+          <div class="banner-meta">
+            <span class="badge-category" id="bannerCategory">Fundamentals</span>
+            <span class="read-time" id="bannerReadTime">⏱️ 20 min read</span>
+          </div>
+          <div class="banner-actions">
+            <button class="btn-secondary" id="bookmarkBtn" title="Bookmark this chapter">
+              <i data-lucide="bookmark" style="width: 15px;"></i>
+              <span id="bookmarkBtnText">Bookmark</span>
+            </button>
+            <button class="btn-primary" id="markCompleteBtn">
+              <i data-lucide="check" style="width: 16px;"></i>
+              <span id="markCompleteBtnText">Mark Complete</span>
+            </button>
+          </div>
+        </div>
+
+        <h1 class="module-title-h1" id="bannerTitle">Chapter Title</h1>
+        <p class="module-subtitle-p" id="bannerSubtitle">Subtitle goes here</p>
+        <div class="module-overview-card" id="bannerOverview">
+          Overview text here...
+        </div>
+      </section>
+
+      <!-- Workspace Navigation Tabs -->
+      <nav class="workspace-tabs">
+        <button class="tab-btn active" data-tab="notes">
+          <i data-lucide="book-open" style="width: 17px;"></i>
+          <span>Study Notes</span>
+        </button>
+        <button class="tab-btn" data-tab="quiz">
+          <i data-lucide="help-circle" style="width: 17px;"></i>
+          <span>Interactive Quiz</span>
+          <span class="tab-counter" id="quizTabCount">3</span>
+        </button>
+        <button class="tab-btn" data-tab="playground">
+          <i data-lucide="flask-conical" style="width: 17px;"></i>
+          <span>Security Playground</span>
+        </button>
+        <button class="tab-btn" data-tab="mynotes">
+          <i data-lucide="edit-3" style="width: 17px;"></i>
+          <span>My Notes</span>
+        </button>
+        <button class="tab-btn" data-tab="exam">
+          <i data-lucide="award" style="width: 17px;"></i>
+          <span>Grand Exam</span>
+        </button>
+      </nav>
+
+      <!-- Tab Panes -->
+      <div class="tab-content-area">
+        
+        <!-- Tab 1: Notes Pane -->
+        <div class="tab-pane active" id="pane-notes">
+          <div id="notesContainer">
+            <!-- Dynamically populated sections with Markdown/HTML, code snippets, takeaways -->
+          </div>
+        </div>
+
+        <!-- Tab 2: Quiz Pane -->
+        <div class="tab-pane" id="pane-quiz">
+          <div class="quiz-header">
+            <div class="quiz-header-left">
+              <h3 id="quizChapterTitle">Chapter Assessment Quiz</h3>
+              <p>Test your understanding of the concepts, exploit payloads, and defensive controls.</p>
+            </div>
+            <div class="quiz-header-right">
+              <button class="btn-secondary" id="resetQuizBtn">
+                <i data-lucide="rotate-ccw" style="width: 14px;"></i>
+                <span>Reset Quiz</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="quizCardsList">
+            <!-- Dynamically populated quiz cards -->
+          </div>
+        </div>
+
+        <!-- Tab 3: Security Playground / Simulator Labs -->
+        <div class="tab-pane" id="pane-playground">
+          <div class="lab-card">
+            <h3><i data-lucide="database" style="color: var(--accent);"></i> Lab 1: SQL Injection Sandbox</h3>
+            <p>Type into the username or password fields to see how dynamic queries are constructed and how single quotes or comments manipulate the query logic.</p>
+            
+            <div class="lab-input-group">
+              <label>Select SQL Scenario:</label>
+              <select id="sqliScenarioSelect">
+                <option value="login">Authentication Bypass (SELECT * FROM users WHERE user='...' AND pass='...')</option>
+                <option value="union">UNION-Based Data Extraction (SELECT title, desc FROM products WHERE id='...')</option>
+              </select>
+            </div>
+
+            <div class="lab-input-group">
+              <label>Input Value (Try: <code>admin' --</code> or <code>' UNION SELECT username, password FROM users--</code>):</label>
+              <input type="text" id="sqliInput" value="admin' --" placeholder="Enter injection payload">
+            </div>
+
+            <div class="lab-output-box">
+              <span class="lab-status-pill pill-danger" id="sqliStatusPill">Vulnerable Query Preview</span>
+              <div id="sqliOutputQuery" style="color: #38bdf8; margin-top: 0.5rem;"></div>
+              <div id="sqliResultFeedback" style="margin-top: 0.75rem; color: #cbd5e1;"></div>
+            </div>
+          </div>
+
+          <div class="lab-card">
+            <h3><i data-lucide="code" style="color: var(--accent-secondary);"></i> Lab 2: XSS Reflection & Filter Simulator</h3>
+            <p>Observe how different sanitization approaches (None, Naive String Replace, and Context-Aware HTML Entity Encoding) handle malicious payloads.</p>
+
+            <div class="lab-input-group">
+              <label>Defense Mode:</label>
+              <select id="xssModeSelect">
+                <option value="none">None (Completely Vulnerable)</option>
+                <option value="naive">Naive Replace (Removes `&lt;script&gt;` once)</option>
+                <option value="secure">Secure (HTML Entity Encoded)</option>
+              </select>
+            </div>
+
+            <div class="lab-input-group">
+              <label>Payload (Try: <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> or <code>&lt;img src=x onerror=alert(1)&gt;</code> or <code>&lt;scr&lt;script&gt;ipt&gt;alert(1)&lt;/script&gt;</code>):</label>
+              <input type="text" id="xssInput" value="<img src=x onerror=alert('XSS')>" placeholder="Enter XSS payload">
+            </div>
+
+            <div class="lab-output-box">
+              <span class="lab-status-pill pill-danger" id="xssStatusPill">Filter Status</span>
+              <div style="margin-top: 0.5rem;"><strong>Raw Rendered HTML:</strong> <code id="xssRenderedHtml"></code></div>
+              <div style="margin-top: 0.5rem; color: #a3e635;" id="xssExecutionResult"></div>
+            </div>
+          </div>
+
+          <div class="lab-card">
+            <h3><i data-lucide="folder" style="color: var(--accent-warning);"></i> Lab 3: Path Traversal & Normalization Simulator</h3>
+            <p>Explore directory traversal sequences and observe how the web application resolves canonical file paths on the server.</p>
+
+            <div class="lab-input-group">
+              <label>Requested Filename / Parameter (Try: <code>../../../../etc/passwd</code> or <code>....//....//etc/shadow</code>):</label>
+              <input type="text" id="pathInput" value="../../etc/passwd">
+            </div>
+
+            <div class="lab-output-box">
+              <span class="lab-status-pill pill-danger" id="pathStatusPill">Access Status</span>
+              <div style="margin-top: 0.5rem;"><strong>Simulated Server Path:</strong> <code id="pathResolved">/var/www/html/../../etc/passwd</code></div>
+              <div style="margin-top: 0.5rem;"><strong>Canonicalized Path:</strong> <code id="pathCanonical">/etc/passwd</code></div>
+              <div style="margin-top: 0.5rem;" id="pathResultText"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Personal Notes Pane -->
+        <div class="tab-pane" id="pane-mynotes">
+          <div class="notes-container">
+            <div class="notes-header">
+              <div>
+                <h3>Personal Study Notes for This Chapter</h3>
+                <p style="color: var(--text-dim); font-size: 0.85rem;">Saved automatically to your browser's local storage.</p>
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn-secondary" id="clearNotesBtn">Clear Notes</button>
+                <button class="btn-primary" id="saveNotesBtn">Save Notes</button>
+              </div>
+            </div>
+            <textarea class="notes-textarea" id="userChapterNotes" placeholder="Write key insights, commands, payload ideas, or lab notes for this chapter here..."></textarea>
+          </div>
+        </div>
+
+        <!-- Tab 5: Grand Exam Mode -->
+        <div class="tab-pane" id="pane-exam">
+          <div class="exam-container" id="examStartView">
+            <div class="exam-icon">🏆</div>
+            <h2>WAHH Grand Web Security Mastery Exam</h2>
+            <p style="max-width: 600px; margin: 1rem auto; color: var(--text-muted);">
+              Test your comprehensive knowledge across all 21 chapters of The Web Application Hacker's Handbook. This timed mock assessment selects 25 randomized questions from the entire course curriculum.
+            </p>
+            <div style="margin: 1.5rem 0; color: var(--text-dim); font-size: 0.9rem;">
+              <span>Questions: <strong>25</strong></span> • 
+              <span>Passing Score: <strong>80% (20/25)</strong></span> • 
+              <span>Certification: <strong>Included</strong></span>
+            </div>
+            <button class="btn-primary" id="startExamBtn" style="padding: 0.75rem 2rem; font-size: 1rem; margin: 0 auto;">
+              Begin Mastery Exam
+            </button>
+          </div>
+
+          <div id="examActiveView" style="display: none;">
+            <div class="quiz-header">
+              <div>
+                <h3>Grand Exam In Progress</h3>
+                <p id="examProgressLabel">Question 1 of 25</p>
+              </div>
+              <div>
+                <button class="btn-primary" id="submitExamBtn">Submit Exam</button>
+              </div>
+            </div>
+            <div id="examQuestionsList"></div>
+          </div>
+
+          <div id="examResultView" style="display: none; text-align: center; padding: 2rem;">
+            <div class="exam-score-ring" id="examScoreDisplay">0%</div>
+            <h2 id="examResultTitle">Exam Finished</h2>
+            <p id="examResultSubtitle" style="color: var(--text-muted); margin: 0.75rem 0 1.5rem;"></p>
+            <button class="btn-primary" id="retakeExamBtn" style="margin: 0 auto;">Take Another Exam</button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ==========================================================================
+       Search Modal (Ctrl+K)
+       ========================================================================== -->
+  <div class="modal-overlay" id="searchModal">
+    <div class="modal-card">
+      <div class="search-input-header">
+        <i data-lucide="search" style="color: var(--accent);"></i>
+        <input type="text" id="searchInput" placeholder="Search chapters, vulnerabilities, headers, payloads, tools..." autocomplete="off">
+        <button class="btn-icon" id="closeSearchBtn" style="border: none;">✕</button>
+      </div>
+      <div class="search-results-list" id="searchResults">
+        <div style="padding: 2rem; text-align: center; color: var(--text-dim);">
+          Type at least 2 characters to search across all 21 chapters and quiz questions.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       Data Backup / Restore Modal
+       ========================================================================== -->
+  <div class="modal-overlay" id="backupModal">
+    <div class="modal-card" style="padding: 2rem;">
+      <h3 style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+        <i data-lucide="hard-drive" style="color: var(--accent);"></i>
+        Backup & Restore Study Progress
+      </h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+        Export your completed chapters, quiz scores, and personal study notes to a JSON file, or restore them onto another device.
+      </p>
+
+      <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+        <button class="btn-primary" id="exportDataBtn">
+          <i data-lucide="download" style="width: 16px;"></i>
+          Export Progress JSON
+        </button>
+        <label class="btn-secondary" style="cursor: pointer;">
+          <i data-lucide="upload" style="width: 16px;"></i>
+          Import Progress JSON
+          <input type="file" id="importFileInput" accept=".json" style="display: none;">
+        </label>
+      </div>
+
+      <div style="border-top: 1px solid var(--border-subtle); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center;">
+        <button class="btn-secondary" id="resetAllProgressBtn" style="color: var(--accent-danger); border-color: rgba(239, 68, 68, 0.4);">
+          Reset All Progress
+        </button>
+        <button class="btn-secondary" id="closeBackupModalBtn">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/curriculum.js?v=3"></script>
+  <script src="js/app.js?v=3"></script>
+</body>
+</html>

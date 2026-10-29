@@ -1,0 +1,15 @@
+# Editor and IDE configurations
+.cursor/
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS artifacts
+.DS_Store
+Thumbs.db

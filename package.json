@@ -1,0 +1,20 @@
+{
+  "name": "wahh-learning-platform",
+  "version": "1.0.0",
+  "description": "Interactive Web Security Learning Academy for The Web Application Hacker's Handbook",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 server.py"
+  },
+  "keywords": [
+    "cybersecurity",
+    "web-security",
+    "appsec",
+    "pentesting",
+    "wahh",
+    "quizzes",
+    "interview-prep"
+  ],
+  "author": "Team NullX / rahatsahriarrafi",
+  "license": "MIT"
+}
